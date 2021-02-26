@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+<form method="get" action="">
+    <input type="text" name="q" value="" />
+    <button type="submit">Buscar</button>
+</form>
+
+<div class="rounded">
+    Lista de clientes.
+
+    {% for customer in customers if customer|length > 0 %}
+        <li>
+            {{ customer.name }}
+            <button>&times;</button>
+        </li>
+    {% else %}
+        <li>No hay clientes en la base de datos</li>
+    {% endfor %}
+</div>
+{% endblock %}

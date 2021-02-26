@@ -1,7 +1,5 @@
 {
-  "devDependencies": {
-    "autoprefixer": "^10.2.4",
-    "postcss": "^8.2.6",
-    "tailwindcss": "^2.0.3"
+  "scripts": {
+    "build": "NODE_ENV=production npx tailwindcss-cli@latest build ./src/Assets/css/tailwind.css -o ./public/css/style.css"
   }
 }
