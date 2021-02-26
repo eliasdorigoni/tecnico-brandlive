@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "build": "NODE_ENV=production npx tailwindcss-cli@latest build ./src/Assets/css/tailwind.css -o ./public/css/style.css"
+    "build": "NODE_ENV=production npx tailwindcss-cli@latest build ./src/Assets/css/tailwind.css -o ./public/css/style.css",
+    "dev": "npx tailwindcss-cli@latest build ./src/Assets/css/tailwind.css -o ./public/css/style.css"
   }
 }
