@@ -22,7 +22,7 @@ a:hover {
 }
 
 .container {
-    @apply mx-auto max-w-2xl bg-white rounded px-2 py-1 shadow-sm;
+    @apply mx-auto max-w-3xl bg-white rounded px-2 py-1 shadow-sm;
 }
 
 input[type="text"],

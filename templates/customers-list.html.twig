@@ -17,6 +17,7 @@
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>Email</th>
+                    <th>Grupos</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -27,8 +28,19 @@
                     <td>{{ customer.firstName }}</td>
                     <td>{{ customer.email }}</td>
                     <td>
-                        <a class="button mr-2" href="{{ path('customer.edit', {'id': customer.id}) }}">Editar</a>
-                        <button class="bg-red-500 hover:bg-red-600">Eliminar</button>
+                        <ul>
+                            <li>Grupo A</li>
+                            <li>Grupo B</li>
+                            <li>Grupo C</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="button mb-1" href="{{ path('customer.edit', {'id': customer.id}) }}">
+                            <img class="opacity-70 inline align-baseline w-3 h-3" src="{{ asset('svg/pencil.svg') }}"> Editar
+                        </a><br>
+                        <button class="bg-red-500 hover:bg-red-600">
+                            <img class="opacity-70 inline align-baseline w-3 h-3" src="{{ asset('svg/times.svg') }}"> Eliminar
+                        </button>
                     </td>
                 </tr>
             {% endfor %}
