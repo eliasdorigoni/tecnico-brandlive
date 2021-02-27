@@ -298,6 +298,9 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/validator": {
+        "version": "v3.4.47"
+    },
     "symfony/yaml": {
         "version": "v3.4.47"
     },

@@ -4,6 +4,13 @@
 
 <div class="container">
     <h1 class="title">Lista de clientes</h1>
+
+    {% for message in app.flashes('notice') %}
+        <p style="background-color:#51d255" class="text-center mb-2 text-sm py-1">
+            {{ message }}
+        </p>
+    {% endfor %}
+
     {% if customers|length > 0 %}
         <div class="flex justify-end mb-4">
             <form method="get" action="/" class="flex flex-row gap-1">

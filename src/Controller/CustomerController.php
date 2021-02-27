@@ -5,11 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Customer;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Form\CustomerType;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class CustomerController extends Controller
@@ -29,17 +26,20 @@ class CustomerController extends Controller
     /**
      * @Route("/customer/create", name="customer.create")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $customer = new Customer();
+        $form = $this->createForm(CustomerType::class, $customer);
 
-        $form = $this->createFormBuilder($customer)
-            ->add('firstName', TextType::class, ['label' => 'Nombre'])
-            ->add('lastName', TextType::class, ['label' => 'Apellido'])
-            ->add('email', EmailType::class, ['label' => 'Email'])
-            ->add('observations', TextareaType::class, ['label' => 'Observaciones'])
-            ->add('save', SubmitType::class, ['label' => 'Crear cliente'])
-            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer);
+            $entityManager->flush();
+            $this->addFlash('notice', 'Cliente creado correctamente!');
+
+            return $this->redirectToRoute('home');
+        }
 
         return $this->render('customer-create.html.twig', [
             'form' => $form->createView(),
@@ -55,22 +55,6 @@ class CustomerController extends Controller
             ->getRepository(Customer::class)
             ->find($id);
         return $this->render('customer-edit.html.twig', compact('customer'));
-    }
-
-    public function storeAction()
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $customer = new Customer();
-        $customer->setFirstName('nombre');
-        $customer->setLastName('apellido');
-        $customer->setEmail('test@email.com');
-
-        // tells Doctrine you want to (eventually) save the Product (no queries yet)
-        $entityManager->persist($customer);
-
-        // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
     }
 
     public function deleteAction()

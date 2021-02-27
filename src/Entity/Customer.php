@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
@@ -18,22 +19,42 @@ class Customer
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message = "Este campo no puede estar vacío")
+     * @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "El nombre puede tener hasta {{ limit }} caracteres"
+     * )
      */
-    private $firstName = '';
+    private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message = "Este campo no puede estar vacío")
+     * @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "El apellido puede tener hasta {{ limit }} caracteres"
+     * )
      */
-    private $lastName = '';
+    private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message = "Este campo no puede estar vacío")
+     * @Assert\Email(message = "El email '{{ value }}' no es válido.")
+     * @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "El email puede tener hasta {{ limit }} caracteres"
+     * )
      */
-    private $email = '';
+    private $email;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *      max = 2000,
+     *      maxMessage = "Las observaciones pueden ser de hasta {{ limit }} caracteres"
+     * )
      */
     private $observations;
 
@@ -44,7 +65,7 @@ class Customer
 
     public function getFirstName(): string
     {
-        return $this->firstName;
+        return $this->firstName ?? '';
     }
 
     public function setFirstName($value): void
@@ -54,7 +75,7 @@ class Customer
 
     public function getLastName(): string
     {
-        return $this->lastName;
+        return $this->lastName ?? '';
     }
 
     public function setLastName($value): void
@@ -64,7 +85,7 @@ class Customer
 
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->email ?? '';
     }
 
     public function setEmail($value): void
@@ -72,9 +93,9 @@ class Customer
         $this->email = $value;
     }
 
-    public function getObservations()
+    public function getObservations(): string
     {
-        return $this->observations;
+        return $this->observations ?? '';
     }
 
     public function setObservations(string $value = null): void
