@@ -32,8 +32,23 @@ textarea {
     @apply rounded px-2 py-1;
 }
 
+.button,
 button {
-    @apply bg-indigo-400 rounded px-2 py-1 text-white;
+    @apply inline-block bg-indigo-400 rounded px-2 py-1 text-white;
+}
+
+button:hover {
+    @apply bg-indigo-500 no-underline;
+}
+
+table th {
+    @apply font-semibold;
+}
+
+table th,
+table td {
+    border-width: 1px;
+    @apply px-1 py-0.5;
 }
 
 @tailwind utilities;

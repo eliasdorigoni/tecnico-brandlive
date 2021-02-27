@@ -4,21 +4,20 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-
 use App\Entity\Customer;
-use Doctrine\ORM\EntityManagerInterface;
 
 
 class CustomerController extends Controller
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/{page}", name="home", requirements={"page"="\d+"}, )
      */
-    public function indexAction()
+    public function indexAction($page = 1)
     {
         $customers = $this->getDoctrine()
             ->getRepository(Customer::class)
             ->findAll();
+
         return $this->render('customers-list.html.twig', compact('customers'));
     }
 
@@ -30,7 +29,18 @@ class CustomerController extends Controller
         return $this->render('customer-create.html.twig');
     }
 
-    public function editAction()
+    /**
+     * @Route("/customer/{id}/edit", name="customer.edit", requirements={"id"="\d+"})
+     */
+    public function editAction($id)
+    {
+        $customer = $this->getDoctrine()
+            ->getRepository(Customer::class)
+            ->find($id);
+        return $this->render('customer-edit.html.twig', compact('customer'));
+    }
+
+    public function storeAction()
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -44,11 +54,6 @@ class CustomerController extends Controller
 
         // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
-    }
-
-    public function storeAction()
-    {
-
     }
 
     public function deleteAction()

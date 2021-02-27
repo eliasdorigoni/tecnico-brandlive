@@ -37,6 +37,11 @@ class Customer
      */
     private $observations;
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     public function getFirstName(): string
     {
         return $this->firstName;

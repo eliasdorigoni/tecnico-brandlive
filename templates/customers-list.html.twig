@@ -5,13 +5,15 @@
 <div class="container">
     <h1 class="title">Lista de clientes</h1>
     {% if customers|length > 0 %}
-        <form method="get" action="">
-            <input type="text" name="q" value="" />
-            <button type="submit">Buscar</button>
-        </form>
-        <table>
+        <div class="flex justify-end mb-4">
+            <form method="get" action="/" class="flex flex-row gap-1">
+                <input class="w-48" type="text" name="q" value="" />
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+        <table class="table-auto w-full">
             <thead>
-                <tr>
+                <tr class="text-left">
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>Email</th>
@@ -25,8 +27,8 @@
                     <td>{{ customer.firstName }}</td>
                     <td>{{ customer.email }}</td>
                     <td>
-                        <button class="mr-4">Editar</button>
-                        <button class="bg-red-500">Eliminar</button>
+                        <a class="button mr-2" href="{{ path('customer.edit', {'id': customer.id}) }}">Editar</a>
+                        <button class="bg-red-500 hover:bg-red-600">Eliminar</button>
                     </td>
                 </tr>
             {% endfor %}
