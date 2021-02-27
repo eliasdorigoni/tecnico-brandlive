@@ -11,14 +11,15 @@
         </p>
     {% endfor %}
 
-    {% if customers|length > 0 %}
+    {% if pagination.getTotalItemCount > 0 %}
         <div class="flex justify-end mb-4">
             <form method="get" action="/" class="flex flex-row gap-1">
                 <input class="w-48" type="text" name="q" value="" />
                 <button type="submit">Buscar</button>
             </form>
         </div>
-        <table class="table-auto w-full">
+
+        <table class="table-auto w-full mb-2">
             <thead>
                 <tr class="text-left">
                     <th>Apellido</th>
@@ -28,8 +29,9 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
+
             <tbody>
-            {% for customer in customers %}
+            {% for customer in pagination %}
                 <tr>
                     <td>{{ customer.lastName }}</td>
                     <td>{{ customer.firstName }}</td>
@@ -52,7 +54,16 @@
                 </tr>
             {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">Total clientes: {{ pagination.getTotalItemCount }}</td>
+                </tr>
+            </tfoot>
         </table>
+
+        <div class="text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% else %}
         <p><em>No hay clientes en la base de datos</em></p>
     {% endif %}

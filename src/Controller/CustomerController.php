@@ -14,13 +14,15 @@ class CustomerController extends Controller
     /**
      * @Route("/{page}", name="home", requirements={"page"="\d+"}, )
      */
-    public function indexAction($page = 1)
+    public function indexAction($page = 1, Request $request)
     {
-        $customers = $this->getDoctrine()
-            ->getRepository(Customer::class)
-            ->findAll();
+        $query = $this->getDoctrine()->getManager()->createQuery('SELECT a FROM App:Customer a');
+        $paginator  = $this->get('knp_paginator');
+        $perPage = 10;
+        $pagination = $paginator->paginate($query, (int) $page, $perPage);
+        $pagination->setTemplate('partials/pagination.html.twig');
 
-        return $this->render('customers-list.html.twig', compact('customers'));
+        return $this->render('customers-list.html.twig', compact('pagination'));
     }
 
     /**
