@@ -1,21 +1,41 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-<form method="get" action="">
-    <input type="text" name="q" value="" />
-    <button type="submit">Buscar</button>
-</form>
 
-<div class="rounded">
-    Lista de clientes.
-
-    {% for customer in customers if customer|length > 0 %}
-        <li>
-            {{ customer.name }}
-            <button>&times;</button>
-        </li>
+<div class="container">
+    <h1 class="title">Lista de clientes</h1>
+    {% if customers|length > 0 %}
+        <form method="get" action="">
+            <input type="text" name="q" value="" />
+            <button type="submit">Buscar</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.lastName }}</td>
+                    <td>{{ customer.firstName }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>
+                        <button class="mr-4">Editar</button>
+                        <button class="bg-red-500">Eliminar</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% else %}
-        <li>No hay clientes en la base de datos</li>
-    {% endfor %}
+        <p><em>No hay clientes en la base de datos</em></p>
+    {% endif %}
+
+    <a href="{{ path('customer.create') }}">Crear nuevo cliente</a>
 </div>
 {% endblock %}

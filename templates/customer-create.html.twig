@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h1 class="title">Crear cliente</h1>
+
+    <form method="get" action="">
+        <div class="grid gap-4 grid-cols-2 mb-2">
+            <div>
+                <label class="block">Nombre<br>
+                    <input class="w-full" type="text" name="firstName" value="" />
+                </label>
+            </div>
+            <div>
+                <label class="block">Apellido<br>
+                    <input class="w-full" type="text" name="lastName" value="" />
+                </label>
+            </div>
+        </div>
+
+        <div class="grid gap-4 grid-cols-2 mb-8">
+            <div>
+                <div class="mb-2">
+                    <label class="block">Email<br>
+                        <input class="w-full" type="text" name="email" value="" />
+                    </label>
+                </div>
+                <div>
+                    <p>Grupos</p>
+                    <label>
+                        <input type="checkbox" name="groups[]" value="1" />
+                        Grupo A
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="groups[]" value="2" />
+                        Grupo B
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="groups[]" value="3" />
+                        Grupo C
+                    </label>
+                </div>
+            </div>
+            <div>
+                <label>Observaciones<br>
+                    <textarea class="w-full h-32" name="observations" ></textarea>
+                </label>
+            </div>
+        </div>
+
+        <a class="mx-2" href="{{ path('home') }}">Volver</a> <button type="submit">Guardar</button>
+    </form>
+</div>
+{% endblock %}
