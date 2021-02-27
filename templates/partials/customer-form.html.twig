@@ -1,0 +1,52 @@
+{{ form_start(form) }}
+<div class="grid gap-4 grid-cols-2 mb-2">
+    <div>
+        {{ form_label(form.firstName) }}
+        <div class="text-sm text-red-500">
+            {{ form_errors(form.firstName) }}
+        </div>
+        {{ form_widget(form.firstName, {'attr': {'class': 'w-full'}}) }}
+    </div>
+    <div>
+        {{ form_label(form.lastName) }}
+        <div class="text-sm text-red-500">
+            {{ form_errors(form.lastName) }}
+        </div>
+        {{ form_widget(form.lastName, {'attr': {'class': 'w-full'}}) }}
+    </div>
+</div>
+
+<div class="grid gap-4 grid-cols-2 mb-8">
+    <div>
+        <div class="mb-2">
+            {{ form_label(form.email) }}
+            <div class="text-sm text-red-500">
+                {{ form_errors(form.email) }}
+            </div>
+            {{ form_widget(form.email, {'attr': {'class': 'w-full'}}) }}
+        </div>
+        <div>
+            <p>PLACEHOLDER grupos</p>
+            <label>
+                <input type="checkbox" value="1" />
+                Grupo A
+            </label><br>
+            <label>
+                <input type="checkbox" value="2" />
+                Grupo B
+            </label><br>
+            <label>
+                <input type="checkbox" value="3" />
+                Grupo C
+            </label>
+        </div>
+    </div>
+    <div>
+        {{ form_label(form.observations) }}
+        <div class="text-sm text-red-500">
+            {{ form_errors(form.observations) }}
+        </div>
+        {{ form_widget(form.observations, {'attr': {'class': 'w-full h-32'}}) }}
+    </div>
+</div>
+{{ form_end(form) }}

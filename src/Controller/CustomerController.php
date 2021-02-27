@@ -49,12 +49,27 @@ class CustomerController extends Controller
     /**
      * @Route("/customer/{id}/edit", name="customer.edit", requirements={"id"="\d+"})
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
-        $customer = $this->getDoctrine()
-            ->getRepository(Customer::class)
-            ->find($id);
-        return $this->render('customer-edit.html.twig', compact('customer'));
+        $entityManager = $this->getDoctrine()->getManager();
+        $customer = $entityManager->getRepository(Customer::class)->find((int) $id);
+
+        if (!$customer) {
+            throw $this->createNotFoundException('El cliente ' . $id . ' no existe');
+        }
+
+        $form = $this->createForm(CustomerType::class, $customer);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($customer);
+            $entityManager->flush();
+            $this->addFlash('notice', 'Cliente editado.');
+        }
+
+        return $this->render('customer-edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     public function deleteAction()
