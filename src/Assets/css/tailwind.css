@@ -37,6 +37,7 @@ button {
     @apply inline-block bg-indigo-400 rounded px-2 py-1 text-white;
 }
 
+.button:hover,
 button:hover {
     @apply bg-indigo-500 no-underline;
 }
