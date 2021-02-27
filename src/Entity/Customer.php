@@ -20,17 +20,17 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstName;
+    private $firstName = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lastName;
+    private $lastName = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private $email = '';
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -66,6 +66,7 @@ class Customer
     {
         return $this->email;
     }
+
     public function setEmail($value): void
     {
         $this->email = $value;
@@ -76,7 +77,7 @@ class Customer
         return $this->observations;
     }
 
-    public function setObservations($value): void
+    public function setObservations(string $value = null): void
     {
         $this->observations = $value;
     }

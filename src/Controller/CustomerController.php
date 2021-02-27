@@ -5,6 +5,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Customer;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class CustomerController extends Controller
@@ -26,7 +31,19 @@ class CustomerController extends Controller
      */
     public function createAction()
     {
-        return $this->render('customer-create.html.twig');
+        $customer = new Customer();
+
+        $form = $this->createFormBuilder($customer)
+            ->add('firstName', TextType::class, ['label' => 'Nombre'])
+            ->add('lastName', TextType::class, ['label' => 'Apellido'])
+            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('observations', TextareaType::class, ['label' => 'Observaciones'])
+            ->add('save', SubmitType::class, ['label' => 'Crear cliente'])
+            ->getForm();
+
+        return $this->render('customer-create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

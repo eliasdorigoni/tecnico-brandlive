@@ -2,53 +2,54 @@
 
 {% block body %}
 <div class="container">
-    <h1 class="title">Crear cliente</h1>
+    <h1 class="title">Crear nuevo cliente</h1>
 
-    <form method="get" action="">
+    {{ form_start(form) }}
         <div class="grid gap-4 grid-cols-2 mb-2">
             <div>
-                <label class="block">Nombre<br>
-                    <input class="w-full" type="text" name="firstName" value="" />
-                </label>
+                {{ form_label(form.firstName) }}
+                {{ form_errors(form.firstName) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'w-full'}}) }}
             </div>
             <div>
-                <label class="block">Apellido<br>
-                    <input class="w-full" type="text" name="lastName" value="" />
-                </label>
+                {{ form_label(form.lastName) }}
+                {{ form_errors(form.lastName) }}
+                {{ form_widget(form.lastName, {'attr': {'class': 'w-full'}}) }}
             </div>
         </div>
 
         <div class="grid gap-4 grid-cols-2 mb-8">
             <div>
                 <div class="mb-2">
-                    <label class="block">Email<br>
-                        <input class="w-full" type="text" name="email" value="" />
-                    </label>
+                    {{ form_label(form.email) }}
+                    {{ form_errors(form.email) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'w-full'}}) }}
                 </div>
                 <div>
-                    <p>Grupos</p>
+                    <p>PLACEHOLDER grupos</p>
                     <label>
-                        <input type="checkbox" name="groups[]" value="1" />
+                        <input type="checkbox" value="1" />
                         Grupo A
                     </label><br>
                     <label>
-                        <input type="checkbox" name="groups[]" value="2" />
+                        <input type="checkbox" value="2" />
                         Grupo B
                     </label><br>
                     <label>
-                        <input type="checkbox" name="groups[]" value="3" />
+                        <input type="checkbox" value="3" />
                         Grupo C
                     </label>
                 </div>
             </div>
             <div>
-                <label>Observaciones<br>
-                    <textarea class="w-full h-32" name="observations" ></textarea>
-                </label>
+                {{ form_label(form.observations) }}
+                {{ form_errors(form.observations) }}
+                {{ form_widget(form.observations, {'attr': {'class': 'w-full h-32'}}) }}
             </div>
         </div>
-
-        <a class="mx-2" href="{{ path('home') }}">Volver</a> <button type="submit">Guardar</button>
-    </form>
+    {{ form_end(form) }}
+    <div class="my-2">
+        <a class="mx-2" href="{{ path('home') }}">Volver</a>
+    </div>
 </div>
 {% endblock %}
