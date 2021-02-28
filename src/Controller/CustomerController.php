@@ -114,4 +114,21 @@ class CustomerController extends Controller
         $this->addFlash('notice', 'Cliente eliminado (ID ' . $id . ')');
         return $this->redirectToRoute('home');
     }
+
+    /**
+     * @Route("/test")
+     */
+    public function testAction()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $customer = $entityManager->getRepository(Customer::class)->find(29);
+
+        $groups = $customer->getGroups();
+
+        // var_dump((array) $groups);
+
+        foreach ($groups as $group) {
+            // var_export($group);
+        }
+    }
 }

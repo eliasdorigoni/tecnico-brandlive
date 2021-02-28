@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
@@ -15,6 +16,8 @@ class Customer
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\ManyToOne(targetEntity="CustomerGroup", inversedBy="customers")
+     * @ORM\JoinColumn(name="id", referencedColumnName="customer_id")
      */
     private $id;
 
@@ -50,6 +53,11 @@ class Customer
     private $email;
 
     /**
+     * @ORM\OneToMany(targetEntity="CustomerGroup", mappedBy="customers")
+     */
+    private $groups;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Length(
      *      max = 2000,
@@ -57,6 +65,11 @@ class Customer
      * )
      */
     private $observations;
+
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -91,6 +104,11 @@ class Customer
     public function setEmail($value): void
     {
         $this->email = $value;
+    }
+
+    public function getGroups()
+    {
+        return $this->groups;
     }
 
     public function getObservations(): string
