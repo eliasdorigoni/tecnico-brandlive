@@ -74,9 +74,23 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function deleteAction()
+    /**
+     * @Route("/customer/remove", name="customer.remove", requirements={"id"="\d+"})
+     */
+    public function removeAction(Request $request)
     {
-        // $entityManager->remove($product);
-        // $entityManager->flush();
+        (int) $id = $request->request->get('id');
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $customer = $entityManager->getRepository(Customer::class)->find($id);
+
+        if (!$customer) {
+            throw $this->createNotFoundException('El cliente ' . $id . ' no existe');
+        }
+
+        $entityManager->remove($customer);
+        $entityManager->flush();
+        $this->addFlash('notice', 'Cliente eliminado (ID ' . $id . ')');
+        return $this->redirectToRoute('home');
     }
 }

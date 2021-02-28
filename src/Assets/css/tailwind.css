@@ -18,7 +18,7 @@ a:hover {
 }
 
 .container {
-    @apply mx-auto max-w-3xl bg-white rounded px-2 py-1 shadow-sm;
+    @apply mx-auto max-w-3xl bg-white rounded px-2 pt-1 pb-2 shadow-sm;
 }
 
 input[type="text"],
