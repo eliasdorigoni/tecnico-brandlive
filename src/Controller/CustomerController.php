@@ -22,19 +22,18 @@ class CustomerController extends Controller
             $searchColumn = 'lastName';
         }
 
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $query = $entityManager->createQuery('SELECT a FROM App:Customer a');
+        $repository = $this->getDoctrine()->getRepository(Customer::class);
+        $queryBuilder = $repository->createQueryBuilder('a');
 
         if (!is_null($searchQuery)) {
-            $query = $query
+            $queryBuilder = $queryBuilder
                 ->where('a.' . $searchColumn . ' LIKE :search')
                 ->setParameter('search', $searchQuery);
         }
 
         $paginator  = $this->get('knp_paginator');
         $perPage = 10;
-        $pagination = $paginator->paginate($query, (int) $page, $perPage);
+        $pagination = $paginator->paginate($queryBuilder->getQuery(), (int) $page, $perPage);
         $pagination->setTemplate('partials/pagination.html.twig');
 
         return $this->render('customers-list.html.twig', compact(
