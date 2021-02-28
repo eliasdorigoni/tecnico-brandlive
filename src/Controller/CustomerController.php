@@ -16,13 +16,34 @@ class CustomerController extends Controller
      */
     public function indexAction($page = 1, Request $request)
     {
-        $query = $this->getDoctrine()->getManager()->createQuery('SELECT a FROM App:Customer a');
+        $searchQuery = $request->query->get('q');
+        $searchColumn = $request->query->get('in');
+        if (!in_array($searchColumn, ['lastName', 'firstName', 'email'])) {
+            $searchColumn = 'lastName';
+        }
+
+
+        $entityManager = $this->getDoctrine()->getManager();
+        if (is_null($searchQuery)) {
+            $query = $entityManager->createQuery(
+                'SELECT a FROM App:Customer a'
+            );
+        } else {
+            $query = $entityManager->createQuery(
+                'SELECT a FROM App:Customer a WHERE a.' . $searchColumn . ' LIKE :search'
+            )->setParameter('search', $searchQuery);
+        }
+
         $paginator  = $this->get('knp_paginator');
         $perPage = 10;
         $pagination = $paginator->paginate($query, (int) $page, $perPage);
         $pagination->setTemplate('partials/pagination.html.twig');
 
-        return $this->render('customers-list.html.twig', compact('pagination'));
+        return $this->render('customers-list.html.twig', compact(
+            'pagination',
+            'searchQuery',
+            'searchColumn'
+        ));
     }
 
     /**

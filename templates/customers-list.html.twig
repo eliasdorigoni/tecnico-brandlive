@@ -11,13 +11,27 @@
         </p>
     {% endfor %}
 
-    {% if pagination.getTotalItemCount > 0 %}
-        <div class="flex justify-end mb-4">
-            <form method="get" action="/" class="flex flex-row gap-1">
-                <input class="w-48" type="text" name="q" value="" />
+    <div class="flex justify-end mb-4">
+        <form method="get" action="/">
+            <div class="flex flex-row gap-1 mb-1">
+                <input class="w-48" type="text" name="q" value="{{ searchQuery }}" />
                 <button type="submit">Buscar</button>
-            </form>
-        </div>
+            </div>
+            <div>
+                <label class="text-sm mr-1">
+                    <input class="align-middle" type="radio" name="in" value="lastName" {{ searchColumn == 'lastName' ? 'checked' : '' }} /> Apellido
+                </label>
+                <label class="text-sm mr-1">
+                    <input class="align-middle" type="radio" name="in" value="firstName" {{ searchColumn == 'firstName' ? 'checked' : '' }} /> Nombre
+                </label>
+                <label class="text-sm mr-1">
+                    <input class="align-middle" type="radio" name="in" value="email" {{ searchColumn == 'email' ? 'checked' : '' }} /> Email
+                </label>
+            </div>
+        </form>
+    </div>
+
+    {% if pagination.getTotalItemCount > 0 %}
 
         <table class="table-auto w-full mb-2">
             <thead>
@@ -37,19 +51,23 @@
                     <td>{{ customer.firstName }}</td>
                     <td>{{ customer.email }}</td>
                     <td>
-                        <ul>
+                        <ul class="text-sm">
                             <li>Grupo A</li>
                             <li>Grupo B</li>
                             <li>Grupo C</li>
                         </ul>
                     </td>
-                    <td>
-                        <a class="button mb-1" href="{{ path('customer.edit', {'id': customer.id}) }}">
-                            <img class="opacity-70 inline align-baseline w-3 h-3" src="{{ asset('svg/pencil.svg') }}"> Editar
-                        </a><br>
-                        <button class="bg-red-500 hover:bg-red-600">
-                            <img class="opacity-70 inline align-baseline w-3 h-3" src="{{ asset('svg/times.svg') }}"> Eliminar
-                        </button>
+                    <td class="text-right">
+                        <a class="button mb-1" href="{{ path('customer.edit', {'id': customer.id}) }}" title="Editar cliente">
+                            <img class="inline align-baseline w-3 h-3 mr-1" src="{{ asset('svg/pencil.svg') }}"> Editar
+                        </a>
+                        <form class="inline js-delete-customer-form"
+                            method="post" action="{{ path('customer.remove') }}">
+                            <input type="hidden" name="id" value="{{ customer.id }}" />
+                            <button class="bg-red-500 hover:bg-red-600" title="Eliminar cliente" type="submit">
+                                <img class="inline align-baseline w-3 h-3 mr-1" src="{{ asset('svg/times.svg') }}"> Eliminar
+                            </button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
@@ -68,6 +86,6 @@
         <p><em>No hay clientes en la base de datos</em></p>
     {% endif %}
 
-    <a href="{{ path('customer.create') }}">Crear nuevo cliente</a>
+    <a class="button" href="{{ path('customer.create') }}">Crear nuevo cliente</a>
 </div>
 {% endblock %}
