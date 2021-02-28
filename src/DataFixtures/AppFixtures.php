@@ -23,6 +23,15 @@ class AppFixtures extends Fixture
                     ->sentence(mt_rand(10, 20))
             );
 
+            $shouldAddGroups = (bool) mt_rand(0, 1);
+            if ($shouldAddGroups) {
+                $groups = array_rand([0, 1, 2], mt_rand(1, 3));
+                if (!is_array($groups)) {
+                    $groups = [$groups];
+                }
+                $customer->setGroups($groups);
+            }
+
             $manager->persist($customer);
         }
 

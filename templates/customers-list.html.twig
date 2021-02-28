@@ -52,9 +52,9 @@
                     <td>{{ customer.email }}</td>
                     <td>
                         <ul class="text-sm">
-                            <li>Grupo A</li>
-                            <li>Grupo B</li>
-                            <li>Grupo C</li>
+                        {% for name in customer.groupNames %}
+                            <li>{{ name }}</li>
+                        {% endfor %}
                         </ul>
                     </td>
                     <td class="text-right">

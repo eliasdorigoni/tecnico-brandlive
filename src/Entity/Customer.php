@@ -58,6 +58,11 @@ class Customer
      */
     private $observations;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $groups;
+
     public function getId(): int
     {
         return $this->id;
@@ -101,5 +106,31 @@ class Customer
     public function setObservations(string $value = null): void
     {
         $this->observations = $value;
+    }
+
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    public function getGroupNames()
+    {
+        $availableGroups = include '../config/customer-groups.php';
+        $matches = [];
+
+        if (is_array($this->groups)) {
+            foreach ($availableGroups as $id => $name) {
+                if (in_array($id, $this->groups)) {
+                    $matches[$id] = $name;
+                }
+            }
+        }
+
+        return $matches;
+    }
+
+    public function setGroups(array $value)
+    {
+        $this->groups = $value;
     }
 }
