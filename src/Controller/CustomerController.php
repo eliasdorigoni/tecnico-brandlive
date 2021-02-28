@@ -24,14 +24,12 @@ class CustomerController extends Controller
 
 
         $entityManager = $this->getDoctrine()->getManager();
-        if (is_null($searchQuery)) {
-            $query = $entityManager->createQuery(
-                'SELECT a FROM App:Customer a'
-            );
-        } else {
-            $query = $entityManager->createQuery(
-                'SELECT a FROM App:Customer a WHERE a.' . $searchColumn . ' LIKE :search'
-            )->setParameter('search', $searchQuery);
+        $query = $entityManager->createQuery('SELECT a FROM App:Customer a');
+
+        if (!is_null($searchQuery)) {
+            $query = $query
+                ->where('a.' . $searchColumn . ' LIKE :search')
+                ->setParameter('search', $searchQuery);
         }
 
         $paginator  = $this->get('knp_paginator');
