@@ -15,7 +15,7 @@
     {% endfor %}
 
 
-    {% include 'partials/customer-form.html.twig' %}
+    {% include 'partials/customer-form.html.twig'  with {'custom_submit_label': {'label': 'Editar cliente'}} %}
 
     <div class="my-2">
         <a class="mx-2" href="{{ path('home') }}">Volver</a>

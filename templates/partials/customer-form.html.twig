@@ -49,4 +49,7 @@
         {{ form_widget(form.observations, {'attr': {'class': 'w-full h-32'}}) }}
     </div>
 </div>
+
+{{ form_row(form.save, custom_submit_label ?? {}) }}
+
 {{ form_end(form) }}
