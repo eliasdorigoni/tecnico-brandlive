@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -29,6 +29,12 @@ class CustomerType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => false,
+            ])
+            ->add('groups', ChoiceType::class, [
+                'choices' => array_flip(include '../config/customer-groups.php'),
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true,
             ])
             ->add('observations', TextareaType::class, [
                 'label' => 'Observaciones',
