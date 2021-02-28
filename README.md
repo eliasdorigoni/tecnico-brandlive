@@ -11,4 +11,9 @@
 1. `php bin/console doctrine:migrations:migrate`
 1. `php bin/console doctrine:fixtures:load`
 1. `npm install`
-1. `npm run build`
+1. `npm run build` (si da error en Windows, ejecutar `npm install win-node-env` y volver a correr el comando)
+
+El sistema fue desarrollado en:
+* Nginx 1.14.2
+* MariaDB 10.3.27
+* PHP 7.4.15
